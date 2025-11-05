@@ -1,6 +1,7 @@
 package main;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Main extends JFrame {
 
@@ -8,9 +9,15 @@ public class Main extends JFrame {
 
     public Main() {
         setTitle("Jeu avec images");
-        setSize(800, 600);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int width = (int) (screenSize.width * 0.6);
+        int height = (int) (screenSize.height * 0.6);
+
+        setSize(width, height);
+        setResizable(false);
         setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         panel = new DrawPanel();
         add(panel);
