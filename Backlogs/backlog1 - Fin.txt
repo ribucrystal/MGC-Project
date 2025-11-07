@@ -1,0 +1,102 @@
+SPRINT 1 (18/09 au 4/11) - Fin 
+
+Tâche 1: Définir les premiers paramètres.
+	Le jeu a pour but de se déplacer dans le monde de la Grèce antique, nous incarnons un héros qui sera sans doute Héraclès et va sur chaque terrain rencontrer des 	monstres ou des déesses.
+		- La rencontre avec une déesse donne accès à un bonus, il permet de faire un choix sur la compétence du personnage à améliorer.
+		- La rencontre avec un monstre déclenche une fenêtre arène et un lancé de dés déterminera la victoire.
+
+Tâche 2: Crée un plateau de jeu.
+	Nous avons créé un plateau de jeu avec un sol en pierre de taille en différente teinte de beige qui rappellerai les pierre en grès de cette époque.
+	Nous avons crée une fenêtre arène ou les combat auront lieu.
+
+Tâche 3: Personnage.   
+	Nous avons trouvé le graphisme du personnage, vue du haut (pour le plateau de jeu) et vue de profil (pour l'arène).
+	Le personnage peut se déplacer sur le plateau et rencontrer des PNG (Pour le moment celui qui explique le jeu ), il peut se rendre dans l'arène.
+	
+
+Tâche 4: UML.
+	Début de la création du diagramme UML.
+
+1. Classe Personnage
+
+	Attributs :
+
+String nom
+int vie
+int attaque
+int positionX
+int positionY
+
+	Méthodes :
+
+seDeplacer()
+rencontrerMonstre()
+rencontrerDeesse()
+lancerDes()
+combattre(Monstre m)
+
+
+2. Classe Monstre
+
+	Attributs :
+
+String nom
+int vie
+int attaque
+
+	Méthodes :
+
+attaquer(Personnage p)
+subirDegats(int degats)
+lancerDes()
+
+3. Classe Déesse
+
+	Attributs :
+
+String nom
+int bonusVie
+int bonusAttaque
+
+	Méthodes :
+
+accorderBonus(Personnage p)
+
+4. Classe Jeu
+
+	Attributs :
+
+Personnage joueur
+Monstre[] monstres
+Deesse[] deesses
+Plateau[] plateau
+
+	Méthodes :
+
+demanderDeplacement()
+gererRencontre()
+
+5. Classe Plateau
+
+	Attributs :
+
+int tailleX
+int tailleY
+Case[][] cases
+
+	Méthodes :
+
+afficherPlateau()
+
+6. Classe Case
+
+	Attributs :
+
+boolean estDeesse
+boolean estMonstre
+
+	Méthodes :
+
+rencontrer()
+
+

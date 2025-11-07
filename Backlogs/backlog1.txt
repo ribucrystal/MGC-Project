@@ -1,0 +1,5 @@
+SPRINT 1
+
+Pour ce sprint nous prévoyons de mettre en place le plateau de jeu avec la possibilité de se déplacer et de rencontrer des PNJ (monstre ou desses), avec le design du personnage des monstres et du terrain.
+Giovan travaille principalement sur la programmation, Morgan et Crystal sur le design et la rédaction du diagramme UML. 
+Le temps est difficile à estimer en fonction de la charge de travail en entreprise de chacun et des congés. Nous pensons avoir besoin des 6 semaines pour réaliser ce sprint.

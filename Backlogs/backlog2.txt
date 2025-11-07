@@ -1,0 +1,7 @@
+SPRINT 2 (5/11 au 9/11)
+
+Pour ce sprint nous avons prévu en 4 jour de trouver le graphisme du premier monstre (représentant le Lydre) et de la déesse (représentant Athéna) ainsi que de permettre leur interactions avec le héros, nous voudrions également gérer le lancement de dés.
+
+
+La position du PNJ de départ et son interaction avec le héros est aussi a améliorer.
+
