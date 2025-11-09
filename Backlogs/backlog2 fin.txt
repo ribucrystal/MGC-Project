@@ -1,0 +1,17 @@
+SPRINT 2 (5/11 au 9/11)
+
+Tâche 1: Graphisme.
+Nous avons trouvé les graphismes des deux premier monstres, le l'Hydre et la chimère, celui de la déesse et mis a jour le graphisme de la porte qui mène à l'arène au monstre qui ne nous convenais pas.
+
+Tâche 2: Interactions.
+Les interactions avec les monstres et déesses n'ont finalement pas était fait, le temps était trop court.
+
+
+Tâche 3: Lancement de dès.
+Le graphisme des dès à était crée mais nous n'avons pas encore réussi la simulation du lancement.
+
+Tâche 4: ULM.
+Le diagramme UML à était finalisé et mis dans le dossier backlog.
+
+
+
