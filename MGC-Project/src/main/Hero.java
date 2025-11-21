@@ -1,166 +1,125 @@
 package main;
 
+
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.util.Set;
-import javax.swing.ImageIcon;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class Hero {
-    private Image playerImage;
-    private int x, y;
-    private double scale = 1.0;
-    private boolean facingLeft = false;
-    private final int STEP = 5;
-
-    // Animation
-    private double walkPhase = 0;
-    private boolean moving = false;
-
-    public Hero(String path, int startX, int startY) {
-        playerImage = new ImageIcon(path).getImage();
-        x = startX;
-        y = startY;
-    }
-
-    //  Permet de changer l’image sans recréer le héros
-    public void changeSprite(String path) {
-        playerImage = new ImageIcon(path).getImage();
-    }
-
-    public void setPosition(int newX, int newY) {
-        x = newX;
-        y = newY;
-    }
-
-    public void draw(Graphics g, int panelWidth, int panelHeight, Component observer) {
-        int baseWidth = panelWidth / 10;
-        int playerWidth = (int)(baseWidth * scale);
-        double aspectRatio = (double) playerImage.getHeight(observer) / playerImage.getWidth(observer);
-        int playerHeight = (int)(playerWidth * aspectRatio);
-
-        Graphics2D g2d = (Graphics2D) g.create();
-
-        int offsetY = 0;
-        if (moving) {
-            walkPhase += 0.2;
-            offsetY = (int) (Math.sin(walkPhase) * 3);
-        } else {
-            walkPhase = 0;
-        }
-
-        double legSwing = moving ? Math.sin(walkPhase * 2) * 2 : 0;
-
-        int legStart = (int)(playerHeight * 0.9);
-        int legHeight = playerHeight - legStart;
-
-        if (facingLeft) {
-            g2d.translate(x + playerWidth, y + offsetY);
-            g2d.scale(-1, 1);
-        } else {
-            g2d.translate(x, y + offsetY);
-        }
-
-        // Haut du corps
-        g2d.drawImage(
-            playerImage,
-            0, 0, playerWidth, legStart,
-            0, 0, playerImage.getWidth(null), (int)(playerImage.getHeight(null) * 0.8),
-            observer
-        );
-
-        // Bas du corps (animé)
-        g2d.drawImage(
-            playerImage,
-            (int) legSwing, legStart, playerWidth, playerHeight,
-            0, (int)(playerImage.getHeight(null) * 0.8), playerImage.getWidth(null), playerImage.getHeight(null),
-            observer
-        );
-
-        g2d.dispose();
-    }
-
-    public void move(Set<Integer> keysPressed, int panelWidth, int panelHeight) {
-        int dx = 0, dy = 0;
-
-        int baseWidth = panelWidth / 10;
-        double aspectRatio = (double) playerImage.getHeight(null) / playerImage.getWidth(null);
-        int playerWidth = (int)(baseWidth * scale);
-        int playerHeight = (int)(playerWidth * aspectRatio);
-
-        int marginX = panelWidth / 10;
-        int marginY = panelHeight / 10;
-
-        int zoneMinX = marginX;
-        int zoneMaxX = panelWidth - marginX - playerWidth;
-        int zoneMinY = marginY;
-        int zoneMaxY = panelHeight - marginY - playerHeight;
-
-        moving = false;
-
-        if (keysPressed.contains(KeyEvent.VK_LEFT)) {
-            dx -= STEP;
-            facingLeft = true;
-            moving = true;
-        }
-        if (keysPressed.contains(KeyEvent.VK_RIGHT)) {
-            dx += STEP;
-            facingLeft = false;
-            moving = true;
-        }
-        if (keysPressed.contains(KeyEvent.VK_UP)) {
-            dy -= STEP;
-            moving = true;
-        }
-        if (keysPressed.contains(KeyEvent.VK_DOWN)) {
-            dy += STEP;
-            moving = true;
-        }
-
-        int newX = x + dx;
-        int newY = y + dy;
-
-        if (newX < zoneMinX) newX = zoneMinX;
-        if (newX > zoneMaxX) newX = zoneMaxX;
-        if (newY < zoneMinY) newY = zoneMinY;
-        if (newY > zoneMaxY) newY = zoneMaxY;
-
-        x = newX;
-        y = newY;
+    private BufferedImage image;
+    private int x, y, size;
+    private int maxHealth, currentHealth;
+    private int attaque, defense, chance;
+    private int[] statBonus;
+    private int moveSpeed;
+    private ArrayList<Point> trailPositions;
+    private static final int MAX_TRAIL_LENGTH = 8;
+    
+    public Hero(BufferedImage image, int size, int attaque, int defense, int chance) {
+        this.image = image;
+        this.size = size;
+        this.x = -1;
+        this.y = -1;
+        this.maxHealth = 50;
+        this.currentHealth = 20;
+        this.attaque = attaque;
+        this.defense = defense;
+        this.chance = chance;
+        this.statBonus = new int[]{0, 0, 0};
+        this.moveSpeed = Math.max(4, 12 - defense);
+        this.trailPositions = new ArrayList<>();
     }
     
-    public Rectangle getBounds(int panelWidth, int panelHeight) {
-        int baseWidth = panelWidth / 10;
-        double aspectRatio = (double) playerImage.getHeight(null) / playerImage.getWidth(null);
-        int playerWidth = (int)(baseWidth * scale);
-        int playerHeight = (int)(playerWidth * aspectRatio);
-        return new Rectangle(x, y, playerWidth, playerHeight);
+    public void move(int dx, int dy, int screenWidth, int screenHeight) {
+        int oldX = x, oldY = y;
+        x += dx;
+        y += dy;
+        
+        x = Math.max(0, Math.min(x, screenWidth - size));
+        y = Math.max(0, Math.min(y, screenHeight - size));
+        
+        if (oldX != x || oldY != y) {
+            trailPositions.add(new Point(oldX, oldY));
+            if (trailPositions.size() > MAX_TRAIL_LENGTH) {
+                trailPositions.remove(0);
+            }
+        }
     }
     
-    public int getSTEP() {
-        return STEP;
+    public void undoLastMove(int oldX, int oldY) {
+        this.x = oldX;
+        this.y = oldY;
+        if (!trailPositions.isEmpty()) {
+            trailPositions.remove(trailPositions.size() - 1);
+        }
     }
-
-    public Rectangle getFutureBounds(int dx, int dy, int panelWidth, int panelHeight) {
-        int baseWidth = panelWidth / 10;
-        double aspectRatio = (double) playerImage.getHeight(null) / playerImage.getWidth(null);
-        int playerWidth = (int)(baseWidth * scale);
-        int playerHeight = (int)(playerWidth * aspectRatio);
-
-        int newX = x + dx;
-        int newY = y + dy;
-
-        if (newX < 0) newX = 0;
-        if (newX + playerWidth > panelWidth) newX = panelWidth - playerWidth;
-        if (newY < 0) newY = 0;
-        if (newY + playerHeight > panelHeight) newY = panelHeight - playerHeight;
-
-        return new Rectangle(newX, newY, playerWidth, playerHeight);
+    
+    public Rectangle getFeetCollision() {
+        int h = (int)(size * 0.2);
+        return new Rectangle(x, y + size - h, size, h);
     }
-
-
-
-
-    // Getters
+    
+    public void heal() {
+        if (currentHealth < maxHealth) {
+            currentHealth = maxHealth;
+        }
+    }
+    
+    public void takeDamage(int damage) {
+        currentHealth -= damage;
+        if (currentHealth < 0) currentHealth = 0;
+    }
+    
+    public void reset(int x, int y) {
+        this.x = x;
+        this.y = y;
+        this.currentHealth = maxHealth;
+    }
+    
+    public void upgradeStat(int statIndex) {
+        statBonus[statIndex]++;
+        if (statIndex == 1) { // Défense
+            moveSpeed = Math.max(4, 12 - (defense + statBonus[1]));
+        }
+    }
+    
+    public void draw(Graphics2D g2d, Component observer) {
+        // Dessiner la traînée
+        for (int i = 0; i < trailPositions.size(); i++) {
+            Point p = trailPositions.get(i);
+            float opacity = (float)(i + 1) / (trailPositions.size() + 1) * 0.4f;
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
+            if (image != null) {
+                g2d.drawImage(image, p.x, p.y, size, size, observer);
+            } else {
+                g2d.setColor(Color.BLUE);
+                g2d.fillRect(p.x, p.y, size, size);
+            }
+        }
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+        
+        // Dessiner le héros
+        if (image != null) {
+            g2d.drawImage(image, x, y, size, size, observer);
+        } else {
+            g2d.setColor(Color.BLUE);
+            g2d.fillRect(x, y, size, size);
+        }
+    }
+    
+    // Getters et setters
     public int getX() { return x; }
     public int getY() { return y; }
+    public int getSize() { return size; }
+    public int getCurrentHealth() { return currentHealth; }
+    public int getMaxHealth() { return maxHealth; }
+    public int getAttaque() { return attaque; }
+    public int getDefense() { return defense; }
+    public int getChance() { return chance; }
+    public int[] getStatBonus() { return statBonus; }
+    public int getMoveSpeed() { return moveSpeed; }
+    
+    public void setX(int x) { this.x = x; }
+    public void setY(int y) { this.y = y; }
+    public void setCurrentHealth(int health) { this.currentHealth = health; }
 }
