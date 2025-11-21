@@ -1,0 +1,18 @@
+SPRINT 4 (21/11 au 02/12)
+
+Pour ce sprint nous avons prévu de réaliser 5 tâches.
+
+Tâche 1: Programme -> Géré par Giovan
+Amélioration et vérification des potentiel bug.
+
+Tâche 2: UML. -> Géré par Crystal
+Amélioration de l'UML et vérifier les erreurs.
+
+Tâche 3: Graphisme. -> Géré par Morgan
+Amélioration des graphismes et ajout de décors/structure.
+
+Tâche 4: Backlog. -> Géré par Crystal
+Rédaction du Backlog.
+ 
+Tâche 5: README. -> Géré par Giovan et Morgan
+Explication au joueur pour lancer le jeu sur l'invite de commande.

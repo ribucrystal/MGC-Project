@@ -11,11 +11,10 @@ Modification de l'UML pour ajouter les dès et les pièces.
 Tâche 3: README. -> Géré par Crystal et Morgan
 Explication du jeu (Histoire, principe)
 
-
-Nous n'avons pas réussi à réaliser 2 tâches par manque de temps.
-
-Tâche 1: Graphisme. -> Géré par Morgan
+Tâche 4: Graphisme. -> Géré par Morgan
 Amélioration du graphisme de sol pour mettre en évidence une entrée pour la zone combat et crée le sol de la zone combat.
- 
-Tâche 2: README. -> Giovan et Morgan
+
+Nous n'avons pas réussi à réaliser 1 tâches par manque de temps.
+
+Tâche 1: README. -> Giovan et Morgan
 Explication au joueur pour lancer le jeu sur l'invite de commande
