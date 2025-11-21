@@ -1,0 +1,21 @@
+SPRINT 3 FIN (10/11 au 21/11)
+
+Pour ce sprint nous avons réalisé 3 tâches.
+
+Tâche 1: Gestion du dès. -> Géré par Giovan
+Gérer la simulation du lancement de dès, il y aura 3 dès, un d'attaque, un de défense et un de chance. 
+
+Tâche 2: UML. -> Géré par Crystal
+Modification de l'UML pour ajouter les dès et les pièces.
+
+Tâche 3: README. -> Géré par Crystal et Morgan
+Explication du jeu (Histoire, principe)
+
+
+Nous n'avons pas réussi à réaliser 2 tâches par manque de temps.
+
+Tâche 1: Graphisme. -> Géré par Morgan
+Amélioration du graphisme de sol pour mettre en évidence une entrée pour la zone combat et crée le sol de la zone combat.
+ 
+Tâche 2: README. -> Giovan et Morgan
+Explication au joueur pour lancer le jeu sur l'invite de commande
