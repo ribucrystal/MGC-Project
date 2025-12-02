@@ -1,5 +1,4 @@
-package main;
-
+package main.java.main;
 
 import java.awt.*;
 
@@ -27,7 +26,7 @@ public class GameStats {
     }
     
     public void drawHUD(Graphics2D g2d, Hero hero) {
-        // Boîte principale
+        // Main box
         g2d.setColor(new Color(0, 0, 0, 180));
         g2d.fillRoundRect(10, 10, 180, 80, 15, 15);
         g2d.setColor(new Color(255, 215, 0));
@@ -38,7 +37,7 @@ public class GameStats {
         g2d.setFont(new Font("Arial", Font.BOLD, 20));
         g2d.drawString(drachmes + " Dr", 25, 35);
         
-        // Barre de vie
+        // Health bar
         g2d.setColor(Color.WHITE);
         g2d.setFont(new Font("Arial", Font.BOLD, 14));
         g2d.drawString("VIE:", 25, 55);
@@ -59,7 +58,7 @@ public class GameStats {
         g2d.drawString(hpText, hpX + (hpW - fm.stringWidth(hpText)) / 2, hpY + 13);
     }
     
-    // Getters et setters
+    // Getters and setters
     public int getDrachmes() { return drachmes; }
     public String getCurrentRoom() { return currentRoom; }
     public void setCurrentRoom(String room) { this.currentRoom = room; }

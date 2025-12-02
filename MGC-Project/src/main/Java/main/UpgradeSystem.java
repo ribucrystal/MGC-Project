@@ -1,4 +1,4 @@
-package main;
+package main.java.main;
 
 
 import javax.swing.*;
@@ -64,7 +64,7 @@ public class UpgradeSystem {
         if (stats.spendDrachmes(3)) {
             hero.upgradeStat(selectedStat);
             
-            String[] statNames = {"ATTAQUE +1 !", "DÉFENSE +1 !", "CHANCE +1 !"};
+            String[] statNames = {"ATTACK +1!", "DEFENSE +1!", "LUCK +1!"};
             upgradeMessage = statNames[selectedStat];
             
             if (upgradeMessageTimer != null) {
@@ -79,7 +79,7 @@ public class UpgradeSystem {
             showUpgradeMenu = false;
             return true;
         } else {
-            upgradeMessage = "Pas assez de Drachmes !";
+            upgradeMessage = "Not enough Drachmes!";
             if (upgradeMessageTimer != null) {
                 upgradeMessageTimer.stop();
             }
@@ -97,7 +97,7 @@ public class UpgradeSystem {
             deesseX = screenWidth - deesseSize - 20;
         }
         
-        // Dessiner la déesse
+        // Draw goddess
         if (deesseImage != null) {
             g2d.drawImage(deesseImage, deesseX, deesseY, deesseSize, deesseSize, observer);
         } else {
@@ -105,7 +105,7 @@ public class UpgradeSystem {
             g2d.fillRect(deesseX, deesseY, deesseSize, deesseSize);
         }
         
-        // Bulle d'information si proche
+        // Information bubble if nearby
         if (nearDeesse && !showUpgradeMenu) {
             g2d.setColor(new Color(255, 255, 255, 240));
             int bx = deesseX - 100, by = deesseY - 80;
@@ -115,15 +115,15 @@ public class UpgradeSystem {
             g2d.drawRoundRect(bx, by, 280, 70, 20, 20);
             g2d.setColor(new Color(100, 50, 150));
             g2d.setFont(new Font("Arial", Font.BOLD, 14));
-            g2d.drawString("ENTRÉE: 3Dr = +1 stat", bx + 15, by + 40);
+            g2d.drawString("ENTER: 3Dr = +1 stat", bx + 15, by + 40);
         }
         
-        // Menu d'amélioration
+        // Upgrade menu
         if (showUpgradeMenu) {
             drawUpgradeMenu(g2d, hero, stats, screenWidth, screenHeight);
         }
         
-        // Message d'amélioration
+        // Upgrade message
         if (!upgradeMessage.isEmpty()) {
             g2d.setColor(new Color(0, 255, 0));
             g2d.setFont(new Font("Arial", Font.BOLD, 24));
@@ -145,14 +145,14 @@ public class UpgradeSystem {
         g2d.drawRoundRect(menuX, menuY, 400, 300, 20, 20);
         
         g2d.setFont(new Font("Arial", Font.BOLD, 24));
-        g2d.drawString("Bénédiction Divine", menuX + 70, menuY + 40);
+        g2d.drawString("Divine Blessing", menuX + 90, menuY + 40);
         
         g2d.setColor(Color.WHITE);
         g2d.setFont(new Font("Arial", Font.BOLD, 16));
-        g2d.drawString("Coût: 3Dr (Vous: " + stats.getDrachmes() + "Dr)", 
-            menuX + 60, menuY + 80);
+        g2d.drawString("Cost: 3Dr (You: " + stats.getDrachmes() + "Dr)", 
+            menuX + 80, menuY + 80);
         
-        String[] options = {"ATTAQUE", "DÉFENSE", "CHANCE"};
+        String[] options = {"ATTACK", "DEFENSE", "LUCK"};
         int[] stats_values = {
             hero.getAttaque() + hero.getStatBonus()[0],
             hero.getDefense() + hero.getStatBonus()[1],
@@ -180,8 +180,8 @@ public class UpgradeSystem {
         
         g2d.setColor(Color.LIGHT_GRAY);
         g2d.setFont(new Font("Arial", Font.PLAIN, 14));
-        g2d.drawString("ENTRÉE acheter | ÉCHAP annuler", 
-            menuX + 40, menuY + 270);
+        g2d.drawString("ENTER to buy | ESC to cancel", 
+            menuX + 60, menuY + 270);
     }
     
     // Getters

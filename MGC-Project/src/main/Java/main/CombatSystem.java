@@ -1,5 +1,4 @@
-package main;
-
+package main.java.main;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,7 +7,7 @@ import java.util.Random;
 
 public class CombatSystem {
     private boolean inCombat;
-    private int combatPhase; // 1=attaque, 2=défense, 3=chance
+    private int combatPhase; // 1=attack, 2=defense, 3=luck
     private int playerRoll, bossRoll;
     private int damageDealt, damageBlocked, coinsGained;
     private String combatMessage;
@@ -30,14 +29,14 @@ public class CombatSystem {
         this.diceValues = new int[3];
         this.diceSize = 80;
         this.diceColors = new Color[]{Color.RED, new Color(70, 130, 180), Color.GREEN};
-        this.diceLabels = new String[]{"ATTAQUE", "DÉFENSE", "CHANCE"};
+        this.diceLabels = new String[]{"ATTAQUE", "DEFENSE", "CHANCE"};
     }
     
     public void startCombat() {
         if (inCombat) return;
         inCombat = true;
         combatPhase = 1;
-        combatMessage = "Phase ATTAQUE - Cliquez dé rouge !";
+        combatMessage = "Phase ATTAQUE - Cliquez de rouge!";
     }
     
     public void processCombatRoll(int diceIndex, Hero hero, Boss boss, GameStats stats) {
@@ -70,9 +69,9 @@ public class CombatSystem {
         if (playerRoll <= totalAttaque) {
             damageDealt = playerRoll;
             boss.takeDamage(damageDealt);
-            combatMessage = "Attaque réussie ! -" + damageDealt + " PV au boss !";
+            combatMessage = "Attaque reussie! -" + damageDealt + " PV au boss!";
         } else {
-            combatMessage = "Attaque ratée ! (dé " + playerRoll + " > stat " + totalAttaque + ")";
+            combatMessage = "Attaque ratee! (de " + playerRoll + " > stat " + totalAttaque + ")";
             damageDealt = 0;
         }
     }
@@ -91,11 +90,11 @@ public class CombatSystem {
         hero.takeDamage(finalDamage);
         
         if (bossDamage == 0) {
-            combatMessage = "Le boss rate !";
+            combatMessage = "Le boss rate!";
         } else if (blocked > 0) {
-            combatMessage = "Bloqué " + blocked + ", reçu -" + finalDamage + " PV";
+            combatMessage = "Bloque " + blocked + ", recu -" + finalDamage + " PV";
         } else {
-            combatMessage = "Défense ratée ! -" + finalDamage + " PV";
+            combatMessage = "Defense ratee! -" + finalDamage + " PV";
         }
     }
     
@@ -107,7 +106,7 @@ public class CombatSystem {
         if (playerRoll <= totalChance && damageDealt > 0) {
             coinsGained = playerRoll;
             stats.addDrachmes(coinsGained);
-            combatMessage = "+" + coinsGained + " Drachmes !";
+            combatMessage = "+" + coinsGained + " Drachmes!";
         } else {
             combatMessage = "Pas de bonus.";
         }
@@ -120,7 +119,7 @@ public class CombatSystem {
     private void scheduleDefensePhase() {
         combatPhase = 2;
         Timer t = new Timer(1500, e -> {
-            combatMessage = "Phase DÉFENSE - Le boss attaque ! Dé bleu";
+            combatMessage = "Phase DEFENSE - Le boss attaque! De bleu";
         });
         t.setRepeats(false);
         t.start();
@@ -129,14 +128,14 @@ public class CombatSystem {
     private void scheduleChancePhase() {
         combatPhase = 3;
         Timer t = new Timer(1500, e -> {
-            combatMessage = "Phase CHANCE - Dé vert !";
+            combatMessage = "Phase CHANCE - De vert!";
         });
         t.setRepeats(false);
         t.start();
     }
     
     private void endCombatWithVictory(GameStats stats) {
-        combatMessage = "VICTOIRE ! +10 Drachmes";
+        combatMessage = "VICTOIRE! +10 Drachmes";
         stats.addDrachmes(10);
         Timer t = new Timer(3000, e -> {
             inCombat = false;
@@ -148,7 +147,7 @@ public class CombatSystem {
     }
     
     private void endCombatWithDefeat(Hero hero, GameStats stats) {
-        combatMessage = "DÉFAITE !";
+        combatMessage = "DEFAITE!";
         Timer t = new Timer(3000, e -> {
             stats.setCurrentRoom("fond1");
             hero.reset(stats.getScreenWidth() / 2, stats.getScreenHeight() / 2);

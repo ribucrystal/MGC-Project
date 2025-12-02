@@ -1,4 +1,5 @@
-package main;
+package main.java.main;
+
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

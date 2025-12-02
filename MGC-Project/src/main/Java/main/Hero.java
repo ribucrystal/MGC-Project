@@ -1,5 +1,4 @@
-package main;
-
+package main.java.main;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -21,7 +20,7 @@ public class Hero {
         this.x = -1;
         this.y = -1;
         this.maxHealth = 50;
-        this.currentHealth = 20;
+        this.currentHealth = 50;
         this.attaque = attaque;
         this.defense = defense;
         this.chance = chance;
@@ -78,13 +77,13 @@ public class Hero {
     
     public void upgradeStat(int statIndex) {
         statBonus[statIndex]++;
-        if (statIndex == 1) { // Défense
+        if (statIndex == 1) { // Defense
             moveSpeed = Math.max(4, 12 - (defense + statBonus[1]));
         }
     }
     
     public void draw(Graphics2D g2d, Component observer) {
-        // Dessiner la traînée
+        // Draw trail
         for (int i = 0; i < trailPositions.size(); i++) {
             Point p = trailPositions.get(i);
             float opacity = (float)(i + 1) / (trailPositions.size() + 1) * 0.4f;
@@ -98,7 +97,7 @@ public class Hero {
         }
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
         
-        // Dessiner le héros
+        // Draw hero
         if (image != null) {
             g2d.drawImage(image, x, y, size, size, observer);
         } else {
@@ -107,7 +106,7 @@ public class Hero {
         }
     }
     
-    // Getters et setters
+    // Getters and setters
     public int getX() { return x; }
     public int getY() { return y; }
     public int getSize() { return size; }

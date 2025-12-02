@@ -1,6 +1,4 @@
-package main;
-
-
+package main.java.main;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +11,7 @@ import java.util.Random;
 import java.util.Set;
 
 public class Main extends JPanel implements KeyListener {
-    // Composants du jeu
+    // Game components
     private Hero hero;
     private Boss boss;
     private CombatSystem combatSystem;
@@ -25,14 +23,14 @@ public class Main extends JPanel implements KeyListener {
     // Images
     private BufferedImage[] diceImages = new BufferedImage[6];
     
-    // Contrôles
+    // Controls
     private Set<Integer> pressedKeys = new HashSet<>();
     private Timer moveTimer;
     
     public Main() {
         Random rand = new Random();
         
-        // Charger les images
+        // Load images
         BufferedImage heroImage = loadImage("herosvuedudessus.png");
         BufferedImage deesseImage = loadImage("deesse.png");
         BufferedImage boss1Image = loadImage("boss1.png");
@@ -44,14 +42,14 @@ public class Main extends JPanel implements KeyListener {
             diceImages[i] = loadImage("Des_" + (i + 1) + ".png");
         }
         
-        // Initialiser les stats aléatoires
+        // Initialize random stats
         int attaque = rand.nextInt(6) + 1;
         int defense = rand.nextInt(6) + 1;
         int chance = rand.nextInt(6) + 1;
         
         System.out.println("=== Stats ===\nATK:" + attaque + " DEF:" + defense + " CHC:" + chance);
         
-        // Créer les composants
+        // Create components
         hero = new Hero(heroImage, 80, attaque, defense, chance);
         boss = new Boss(300);
         combatSystem = new CombatSystem(diceImages);
@@ -72,7 +70,7 @@ public class Main extends JPanel implements KeyListener {
         try {
             return ImageIO.read(new File(filename));
         } catch (Exception e) {
-            System.out.println("Erreur chargement " + filename + ": " + e.getMessage());
+            System.out.println("Error loading " + filename + ": " + e.getMessage());
             return null;
         }
     }
@@ -139,36 +137,36 @@ public class Main extends JPanel implements KeyListener {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         
-        // Mise à jour des dimensions
+        // Update dimensions
         gameStats.setScreenWidth(getWidth());
         gameStats.setScreenHeight(getHeight());
         gameWorld.updateHealingZonePosition(getWidth(), getHeight());
         
-        // Initialiser la position du héros si nécessaire
+        // Initialize hero position if needed
         if (hero.getX() == -1) {
             hero.setX((getWidth() - hero.getSize()) / 2);
             hero.setY((getHeight() - hero.getSize()) / 2);
         }
         
-        // Dessiner le monde
+        // Draw world
         gameWorld.drawBackground(g2d, gameStats.getCurrentRoom(), getWidth(), getHeight(), this);
         
-        // Mode éditeur
+        // Editor mode
         if (collisionEditor.isEditorMode()) {
             collisionEditor.draw(g2d);
         }
         
-        // Dessiner le héros
+        // Draw hero
         hero.draw(g2d, this);
         
-        // Zone fond1
+        // fond1 area
         if (gameStats.getCurrentRoom().equals("fond1")) {
             gameWorld.drawHealingZone(g2d);
             upgradeSystem.checkProximity(hero);
             upgradeSystem.draw(g2d, hero, gameStats, getWidth(), getHeight(), this);
         }
         
-        // Zone fond2 (combat)
+        // fond2 area (combat)
         if (gameStats.getCurrentRoom().equals("fond2")) {
             if (boss.exists() && !boss.isDefeated()) {
                 boss.draw(g2d, this, getWidth(), getHeight());
@@ -186,7 +184,7 @@ public class Main extends JPanel implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
         
-        // Menu d'amélioration
+        // Upgrade menu
         if (upgradeSystem.isShowUpgradeMenu()) {
             if (key == KeyEvent.VK_UP) {
                 upgradeSystem.selectPrevious();
@@ -207,7 +205,7 @@ public class Main extends JPanel implements KeyListener {
             }
         }
         
-        // Ouvrir le menu d'amélioration
+        // Open upgrade menu
         if (key == KeyEvent.VK_ENTER && upgradeSystem.isNearDeesse() && 
             !upgradeSystem.isShowUpgradeMenu() && !collisionEditor.isEditorMode()) {
             upgradeSystem.openMenu();
@@ -215,14 +213,14 @@ public class Main extends JPanel implements KeyListener {
             return;
         }
         
-        // Mode éditeur
+        // Editor mode
         if (key == KeyEvent.VK_E) {
             collisionEditor.toggleEditor();
             repaint();
             return;
         }
         
-        // Déplacement
+        // Movement
         if (!collisionEditor.isEditorMode() && !upgradeSystem.isShowUpgradeMenu() &&
             (key == KeyEvent.VK_UP || key == KeyEvent.VK_DOWN || 
              key == KeyEvent.VK_LEFT || key == KeyEvent.VK_RIGHT)) {
@@ -250,11 +248,11 @@ public class Main extends JPanel implements KeyListener {
     @Override
     public void keyTyped(KeyEvent e) {}
     
-    // Listener pour la souris
+    // Mouse listener
     private class GameMouseListener extends MouseAdapter {
         @Override
         public void mousePressed(MouseEvent e) {
-            // Bouton de combat
+            // Combat button
             if (gameStats.getCurrentRoom().equals("fond2") && !combatSystem.isInCombat() && 
                 boss.exists() && !boss.isDefeated()) {
                 Rectangle combatBtn = combatSystem.getCombatButtonBounds(getWidth(), getHeight());
@@ -265,7 +263,7 @@ public class Main extends JPanel implements KeyListener {
                 }
             }
             
-            // Clic sur les dés
+            // Click on dice
             if (gameStats.getCurrentRoom().equals("fond2") && combatSystem.isInCombat()) {
                 for (int i = 0; i < 3; i++) {
                     Rectangle diceBounds = combatSystem.getDiceBounds(i, getWidth(), getHeight());
@@ -280,7 +278,7 @@ public class Main extends JPanel implements KeyListener {
     }
     
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Jeu du Héros");
+        JFrame frame = new JFrame("Jeu du Heros");
         Main game = new Main();
         frame.add(game);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);

@@ -1,4 +1,4 @@
-package main;
+package main.java.main;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Random;
@@ -62,7 +62,7 @@ public class Boss {
             y = screenHeight / 2 - size / 2;
         }
         
-        // Dessiner le boss
+        // Draw boss
         if (image != null) {
             g2d.drawImage(image, x, y, size, size, observer);
         } else {
@@ -70,7 +70,7 @@ public class Boss {
             g2d.fillRect(x, y, size, size);
         }
         
-        // Barre de vie
+        // Health bar
         int barW = 200, barH = 20;
         int barX = x + (size - barW) / 2;
         int barY = y - 30;

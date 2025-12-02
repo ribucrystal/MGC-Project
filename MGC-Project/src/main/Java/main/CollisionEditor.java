@@ -1,5 +1,4 @@
-package main;
-
+package main.java.main;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -60,7 +59,7 @@ public class CollisionEditor implements MouseListener, MouseMotionListener {
                 System.out.println("Collisions fond1: " + collisionZonesFond1.size());
             }
         } catch (Exception e) {
-            System.out.println("Erreur chargement fond1: " + e.getMessage());
+            System.out.println("Error loading fond1: " + e.getMessage());
         }
         
         try {
@@ -72,7 +71,7 @@ public class CollisionEditor implements MouseListener, MouseMotionListener {
                 System.out.println("Collisions fond2: " + collisionZonesFond2.size());
             }
         } catch (Exception e) {
-            System.out.println("Erreur chargement fond2: " + e.getMessage());
+            System.out.println("Error loading fond2: " + e.getMessage());
         }
     }
     
@@ -83,9 +82,9 @@ public class CollisionEditor implements MouseListener, MouseMotionListener {
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
             oos.writeObject(zones);
             oos.close();
-            System.out.println("Sauvé " + currentRoom + ": " + zones.size() + " zones");
+            System.out.println("Saved " + currentRoom + ": " + zones.size() + " zones");
         } catch (Exception e) {
-            System.out.println("Erreur sauvegarde: " + e.getMessage());
+            System.out.println("Error saving: " + e.getMessage());
         }
     }
     
@@ -94,7 +93,7 @@ public class CollisionEditor implements MouseListener, MouseMotionListener {
         
         g2d.setStroke(new BasicStroke(2));
         
-        // Dessiner les zones existantes
+        // Draw existing zones
         for (Rectangle zone : getCurrentCollisionZones()) {
             if (zone == selectedZone) {
                 g2d.setColor(new Color(255, 0, 0, 100));
@@ -108,7 +107,7 @@ public class CollisionEditor implements MouseListener, MouseMotionListener {
             g2d.drawRect(zone.x, zone.y, zone.width, zone.height);
         }
         
-        // Dessiner la zone en cours de création
+        // Draw zone being created
         if (currentRect != null) {
             g2d.setColor(new Color(0, 255, 0, 50));
             g2d.fillRect(currentRect.x, currentRect.y, currentRect.width, currentRect.height);
@@ -116,14 +115,14 @@ public class CollisionEditor implements MouseListener, MouseMotionListener {
             g2d.drawRect(currentRect.x, currentRect.y, currentRect.width, currentRect.height);
         }
         
-        // Afficher les informations
+        // Display information
         g2d.setColor(new Color(0, 0, 0, 150));
         g2d.fillRect(5, 5, 350, 90);
         g2d.setColor(Color.CYAN);
         g2d.setFont(new Font("Arial", Font.BOLD, 14));
-        g2d.drawString("ÉDITEUR - " + currentRoom.toUpperCase(), 15, 25);
+        g2d.drawString("EDITEUR - " + currentRoom.toUpperCase(), 15, 25);
         g2d.setFont(new Font("Arial", Font.PLAIN, 12));
-        g2d.drawString("Clic gauche: créer | Clic droit: supprimer", 15, 45);
+        g2d.drawString("Clic gauche: creer | Clic droit: supprimer", 15, 45);
         g2d.drawString("'E' pour sauvegarder et quitter", 15, 60);
         g2d.drawString("Zones: " + getCurrentCollisionZones().size(), 15, 80);
     }
