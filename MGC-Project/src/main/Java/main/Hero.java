@@ -17,10 +17,10 @@ public class Hero {
     public Hero(BufferedImage image, int size, int attaque, int defense, int chance) {
         this.image = image;
         this.size = size;
-        this.x = -1;
-        this.y = -1;
-        this.maxHealth = 50;
-        this.currentHealth = 50;
+        this.x = 500;
+        this.y = 500;
+        this.maxHealth = 100;
+        this.currentHealth = 100;
         this.attaque = attaque;
         this.defense = defense;
         this.chance = chance;
